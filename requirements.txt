@@ -44,9 +44,6 @@ pycparser==2.19
 Pygments==2.5.2
 python-dateutil==2.8.0
 pytz==2019.3
-pywebcrawler==0.0.1
-pywin32==226
-pywin32-ctypes==0.2.0
 PyX==0.15
 PyYAML==5.1.2
 readme-renderer==24.0
@@ -54,8 +51,6 @@ requests==2.22.0
 requests-toolbelt==0.9.1
 rsa==3.4.2
 s3transfer==0.2.1
-scapy==2.4.3
-scapy-http==1.8.2s
 simplejson==3.17.0
 six==1.13.0
 soupsieve==1.9.5
@@ -63,9 +58,8 @@ sqlparse==0.2.4
 tld==0.9.8
 tqdm==4.41.1
 traitlets==4.3.3
-twine==3.1.1
 uritemplate==3.0.1
 urllib3==1.25.7
 wcwidth==0.1.7
 webencodings==0.5.1
-zipp==1.0.0s
+zipp==1.0.0
