@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <div class="details" style="display:flex;align-items:flex-start;">
+                        <i class='fas fa-user-circle' style='font-size:60px;color:grey'></i>
+                        <div class="details-body px-2">
+                            {% if paste.title is None %}
+                            <h4>Untitled</h4>
+                            {% else %}
+                                <h4>{{paste.title}}</h4>
+                            {% endif %}
+
+                             <p class="other-details text-muted small">
+                                {% if paste.user is None %}
+                                    <i class='fas fa-user-circle'></i> Guest
+                                {% else %}
+                                    <i class='fas fa-user'></i> {{paste.user.username}}
+                                {% endif %}
+                                 <i class="fa fa-eye ml-2"></i> {{paste.views}}
+                                 <i class="fa fa-calendar ml-2"></i> {{paste.created_at}}
+                             </p>
+                        </div>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-header" style="font-weight:600;">
+                            {{paste.syntax | upper}}
+                        </div>
+                        <div class="card-body">
+                            <blockquote>
+                                <kbd>{{paste.content}}</kbd>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="font-weight:600;">
+                            Raw Data
+                        </div>
+                        <div class="card-body">
+                            <textarea class="form-control">
+                                {{paste.content}}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

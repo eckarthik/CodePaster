@@ -14,6 +14,7 @@ class Paste(models.Model):
     expiry = models.CharField(choices=EXPIRY_CHOICES,max_length=20)
     views = models.PositiveIntegerField(default=0,)
     user = models.ForeignKey('auth.User',on_delete=models.SET_NULL,null=True)
+    slug = models.CharField(max_length=10,blank=True)
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate,login
-from django.http import HttpResponse
+from django.contrib.auth import authenticate,login,logout
+from django.http import HttpResponse,Http404
+from paster.models import Paste
 from .forms import PasteForm,SignUpForm,LoginForm
+import random,string
 
 # Create your views here.
 def create_paste(request):
@@ -9,11 +11,13 @@ def create_paste(request):
         form = PasteForm(request.POST)
         if form.is_valid():
             paste = form.save(commit=False)
-            paste.user = request.user #Let's add the user details
-            if paste.save():
-                return HttpResponse("Paste Saved")
+            if request.user.is_authenticated:
+                paste.user = request.user #Let's add the user details
             else:
-                return HttpResponse("Could not save Paste")
+                paste.user = None
+            paste.slug = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+            paste.save()
+            return redirect('/pastes/'+paste.slug)
     else:
         form = PasteForm()
 
@@ -47,3 +51,15 @@ def login_user(request):
     else:
         form = LoginForm()
         return render(request, 'login.html', {'form': form, 'user': request.user})
+
+def logout_user(request):
+    logout(request)
+    return redirect('/')
+
+def view_paste(request,slug):
+    try:
+        paste = Paste.objects.get(slug__exact=slug)
+    except Paste.DoesNotExist:
+        raise Http404("Sorry! Paste does not exist")
+
+    return render(request,'paste_view.html',{'paste':paste})
