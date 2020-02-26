@@ -21,14 +21,14 @@
                 <a class="nav-link" href="#">Contact</a>
               </li>
               <li class="nav-item" style="float:left;align:right;">
-                  <a class="nav-link" href="logout">Logout</a>
+                  <a class="nav-link" href="{% url 'logout'%}">Logout</a>
               </li>
             {% else %}
                 <li class="nav-item">
-                <a class="nav-link" href="login">Login</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="signup">Sign Up</a>
+                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>

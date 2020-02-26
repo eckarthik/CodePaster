@@ -21,7 +21,8 @@ def create_paste(request):
     else:
         form = PasteForm()
 
-    return render(request,'home.html',{'form':form,'user':request.user})
+    recent_pastes = Paste.objects.order_by('-created_at')[0:5]
+    return render(request,'home.html',{'form':form,'user':request.user,'recent_pastes':recent_pastes})
 
 def register_user(request):
     if request.method == 'POST':
@@ -62,4 +63,5 @@ def view_paste(request,slug):
     except Paste.DoesNotExist:
         raise Http404("Sorry! Paste does not exist")
 
-    return render(request,'paste_view.html',{'paste':paste})
+    recent_pastes = Paste.objects.order_by('-created_at')[0:5]
+    return render(request,'paste_view.html',{'paste':paste,'recent_pastes':recent_pastes})
