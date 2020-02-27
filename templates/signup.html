@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container" style="margin-top:20px;">
+
     <div class="row">
         <div class="col-sm-8">
+            {% if register_success == "success" %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> Registered successfully
+                </div>
+            {% elif register_success == "failure" %}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Error!</strong> Sign up failed
+                </div>
+            {% endif %}
             <div class="card">
                 <div class="card-body">
                     <h4>Sign Up</h4>
@@ -22,22 +34,12 @@
                     {% endif %}
                      <form method="POST" action="signup">
                         {%csrf_token%}
-                        <div class="form-group">
-                            <label for="title">Username</label>
-                            {{form.username}}
+                         {% for field in form %}
+                          <div class="form-group">
+                            <label for="title">{{field.label}}</label>
+                            {{field}}
                         </div>
-                         <div class="form-group">
-                            <label for="expiry">Email</label>
-                            {{form.email}}
-                        </div>
-                        <div class="form-group">
-                            <label for="content">Password</label>
-                            {{form.password1}}
-                        </div>
-                        <div class="form-group">
-                            <label for="syntax">Confirm Password</label>
-                            {{form.password2}}
-                        </div>
+                         {% endfor %}
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

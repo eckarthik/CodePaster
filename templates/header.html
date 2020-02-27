@@ -1,6 +1,6 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
       <!-- Brand -->
-      <a class="navbar-brand" href="#">PasteBin</a>
+      <a class="navbar-brand" href="/">PasteBin</a>
 
       <!-- Toggler/collapsibe Button -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -12,13 +12,13 @@
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="#">Hi, {{user.username}}</a>
+                  <a class="nav-link text-white" href="#">Hi, {{user.first_name}}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'mypastes' %}">My Pastes</a>
               </li>
               <li class="nav-item" style="float:left;align:right;">
                   <a class="nav-link" href="{% url 'logout'%}">Logout</a>
@@ -29,9 +29,6 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
               </li>
             {% endif %}
         </ul>

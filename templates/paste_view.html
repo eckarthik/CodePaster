@@ -4,15 +4,26 @@
 <div class="container" style="margin-top:20px;">
     <div class="row">
         <div class="col-sm-8">
+            {% if paste_edit_success == "success" %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success!</strong> Paste changed successfully
+                </div>
+            {% elif paste_edit_success == "failure" %}
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Error!</strong> Paste was not updated
+                </div>
+            {% endif %}
             <div class="card">
                 <div class="card-body">
                     <div class="details" style="display:flex;align-items:flex-start;">
                         <i class='fas fa-user-circle' style='font-size:60px;color:grey'></i>
                         <div class="details-body px-2">
-                            {% if paste.title is None %}
-                            <h4>Untitled</h4>
+                            {% if paste.title %}
+                            <h5>{{paste.title}}</h5>
                             {% else %}
-                                <h4>{{paste.title}}</h4>
+                                <h5>Untitled</h5>
                             {% endif %}
 
                              <p class="other-details text-muted small">
@@ -30,7 +41,7 @@
                         <div class="card-header" style="font-weight:600;">
                             {{paste.syntax | upper}}
                         </div>
-                        <div class="card-body">
+                        <div class="card-body small">
                             <pre class="line-numbers"><code class="language-{{paste.syntax | lower}}">{{paste.content}}</code></pre>
                         </div>
                     </div>
@@ -38,14 +49,28 @@
                         <div class="card-header" style="font-weight:600;">
                             Raw Data
                         </div>
-                        <div class="card-body">
-                            <textarea class="form-control">
-                                {{paste.content}}
-                            </textarea>
-                        </div>
+                        {% if can_be_edited %}
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'pastes' paste.slug %}">
+                                    <textarea class="form-control" name="content">
+                                        {{paste.content}}
+                                    </textarea>
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary btn-sm mt-3" type="submit">Update</button>
+                                </form>
+                            </div>
+
+                        {% else %}
+                            <div class="card-body">
+                                <textarea class="form-control">
+                                    {{paste.content}}
+                                </textarea>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+
         </div>
            <div class="col-sm-4 mt-4  mt-sm-0">
          <div class="card">
@@ -56,7 +81,15 @@
                      <ul class="list-group"></ul>
                              {% for paste in recent_pastes %}
                                 <li class="list-group-item">
-                                    <a href="/pastes/{{paste.slug}}"><h6>{{paste.title}}</h6></a>
+                                    <a href="/pastes/{{paste.slug}}">
+                                        <h6>
+                                            {% if paste.title %}
+                                                {{paste.title | title}}
+                                            {% else %}
+                                                Untitled
+                                            {% endif %}
+                                        </h6>
+                                    </a>
                                     <small class="paste-detail pt-1 d-block">
                                         {{paste.syntax | title}}
                                         <i class="fa fa-eye ml-2"></i> {{paste.views}}

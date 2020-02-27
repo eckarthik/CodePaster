@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="margin-top:20px;max-width:600px;">
+    {% if profile_saved %}
+        <div class="alert alert-success">
+            <strong>Success!</strong> Your profile saved successfully
+        </div>
+    {% endif %}
+<div class="card">
+    <div class="card-body">
+        <form method="POST" action="{% url 'profile' %}">
+            <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" name="firstname" value="{{profile.user.first_name}}" disabled>
+                    </div>
+                     <div class="form-group col-sm-6">
+                        <label for="firstname">Last Name</label>
+                        <input type="text" class="form-control" name="lastname" value="{{profile.user.last_name}}" disabled>
+                    </div>
+                </div>
+             <div class="form-group">
+                <label for="firstname">Bio</label>
+                 <textarea class="form-control" name="bio">{{profile.bio}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" name="location" value="{{profile.location}}">
+            </div>
+            {% csrf_token %}
+            <button class="btn btn-primary mx-auto" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

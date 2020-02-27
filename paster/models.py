@@ -4,7 +4,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
-SYNTAX_CHOICES = [('Python','Python'),('C','C'),('C++','C++'),('Java','Java')]
+SYNTAX_CHOICES = [('Python','Python'),('C','C'),('C++','C++'),('Java','Java'),('JavaScript','JavaScript'),
+                  ('HTML','HTML'),('CSS','CSS'),('TypeScript','TypeScript'),('Rust','Rust'),('Kotlin','Kotlin'),
+                  ('C#','C#'),('Perl','Perl'),('PHP','PHP'),('SCALA','SCALA'),('Swift','Swift'),('SQL','SQL'),
+                  ('R','R'),('Golang','Golang'),('Ruby','Ruby')]
 EXPIRY_CHOICES = [('10m','10m'),('30m','30m'),('1h','1h'),('3h','3h'),('6h','6h'),('Never','Never')]
 class Paste(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)

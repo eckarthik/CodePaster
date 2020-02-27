@@ -38,7 +38,15 @@
                      <ul class="list-group"></ul>
                              {% for paste in recent_pastes %}
                                 <li class="list-group-item">
-                                    <a href="/pastes/{{paste.slug}}"><h6>{{paste.title}}</h6></a>
+                                    <a href="/pastes/{{paste.slug}}">
+                                        <h6>
+                                            {% if paste.title %}
+                                                {{paste.title | title}}
+                                            {% else %}
+                                                Untitled
+                                            {% endif %}
+                                        </h6>
+                                    </a>
                                     <small class="paste-detail pt-1 d-block">
                                         {{paste.syntax | title}}
                                         <i class="fa fa-eye ml-2"></i> {{paste.views}}

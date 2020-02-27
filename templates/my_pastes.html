@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="margin-top:20px;max-width:600px;">
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        My Pastes
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+                             {% if my_pastes|length <= 0 %}
+                              <div class="alert alert-danger">
+                                No pastes yet
+                            </div>
+                              {%endif%}
+                             {% for paste in my_pastes %}
+                                <li class="list-group-item">
+                                    <a href="/pastes/{{paste.slug}}">
+                                        <h6>
+                                            {% if paste.title %}
+                                                {{paste.title | title}}
+                                            {% else %}
+                                                Untitled
+                                            {% endif %}
+                                        </h6>
+                                    </a>
+                                    <small class="paste-detail pt-1 d-block">
+                                        {{paste.syntax | title}}
+                                        <i class="fa fa-eye ml-2"></i> {{paste.views}}
+                                        <i class="fa fa-calendar ml-2"></i> {{paste.created_at}}
+                                    </small>
+                                </li>
+                             {% endfor %}
+                     </ul>
+    </div>
+</div>
+{% endblock %}

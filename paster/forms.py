@@ -26,8 +26,8 @@ class SignUpForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
-    password1 = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(widget=forms.PasswordInput())
+    password1 = forms.CharField(widget=forms.PasswordInput(),label="Password")
+    password2 = forms.CharField(widget=forms.PasswordInput(),label="Confirm Password")
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -59,7 +59,7 @@ class SignUpForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username','email','password1','password2']
+        fields = ['first_name','last_name','username','email','password1','password2']
 
 
 class LoginForm(forms.Form):
