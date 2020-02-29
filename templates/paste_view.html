@@ -40,6 +40,13 @@
                     <div class="card my-3">
                         <div class="card-header" style="font-weight:600;">
                             {{paste.syntax | upper}}
+                            <div class="options d-inline" style="float:right;">
+                                <a href="{% url 'rawpaste' paste.slug %}"><button class="option-buttons">raw</button></a>
+                                <a href="{% url 'downloadpaste' paste.slug %}"><button class="option-buttons">download</button></a>
+                                <a href="{% url 'clonepaste' paste.slug %}"><button class="option-buttons">clone</button></a>
+                                <a href="#"><button class="option-buttons">print</button></a>
+                                <a href="#"><button class="option-buttons">report</button></a>
+                            </div>
                         </div>
                         <div class="card-body small">
                             <pre class="line-numbers"><code class="language-{{paste.syntax | lower}}">{{paste.content}}</code></pre>

@@ -4,6 +4,7 @@ from django.http import HttpResponse,Http404
 from paster.models import Paste,Profile
 from .forms import PasteForm,SignUpForm,LoginForm
 import random,string
+from django.views.generic import View,RedirectView,TemplateView
 
 # Create your views here.
 def create_paste(request):
@@ -69,6 +70,9 @@ def view_paste(request,slug):
         if request.user.is_authenticated:
             if request.user == paste.user:
                 can_be_edited = True
+        #updating the pasteview counters
+        paste.views = paste.views+1
+        paste.save()
         return render(request,'paste_view.html',{'paste':paste,'can_be_edited':can_be_edited,'recent_pastes':recent_pastes})
     elif request.method == 'POST':
         if request.user.is_authenticated and request.user == paste.user:
@@ -101,3 +105,28 @@ def my_pastes(request):
         else:
             return redirect('/')
 
+def download_paste(request,slug):
+    paste = Paste.objects.get(slug=slug)
+    response = HttpResponse(content=paste.content)
+    paste_title = paste.title.replace(" ","_")
+    response['Content-Disposition'] = 'attachment; filename={}.{}'.format(paste_title, "txt")
+    return response
+
+def paste_raw(request,slug):
+    paste = Paste.objects.get(slug=slug)
+    response = HttpResponse(content=paste.content)
+    response['Content-Type'] = 'text/plain'
+    return response
+
+class ClonePasteView(TemplateView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paste = Paste.objects.get(slug__exact=self.kwargs['slug'])
+        recent_pastes = Paste.objects.order_by('-created_at')[0:5]
+        form = PasteForm(initial={'title':paste.title,'content':paste.content,'syntax':paste.syntax,'expiry':paste.expiry})
+        context['form'] = form
+        context['user'] = self.request.user
+        context['recent_pastes'] = recent_pastes
+        return context
