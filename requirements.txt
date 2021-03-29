@@ -41,7 +41,7 @@ pkginfo==1.5.0.1
 prompt-toolkit==2.0.10
 pyasn1==0.4.8
 pycparser==2.19
-Pygments==2.5.2
+Pygments==2.7.4
 python-dateutil==2.8.0
 pytz==2019.3
 PyX==0.15
