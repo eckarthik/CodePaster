@@ -19,7 +19,7 @@ Django==2.2.8
 djongo==1.2.38
 docutils==0.15.2
 fake-useragent==0.1.11
-httpie==2.0.0
+httpie==3.1.0
 idna==2.8
 importlib-metadata==1.4.0
 ipython==7.9.0
